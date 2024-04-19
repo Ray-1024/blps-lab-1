@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Order {
+public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+    private String name;
+    private String description;
+    private long price;
 }

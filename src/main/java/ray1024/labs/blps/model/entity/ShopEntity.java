@@ -12,11 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class User {
+public class ShopEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    private String login;
-    private String password;
-    private Role role;
 }

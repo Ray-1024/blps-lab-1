@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Item {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    private String name;
-    private String description;
-    private long price;
+    private String login;
+    private String password;
+    private RoleEntity role;
 }

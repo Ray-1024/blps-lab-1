@@ -2,10 +2,8 @@ package ray1024.labs.blps.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class ShopDto {
 }

@@ -1,4 +1,4 @@
-package ray1024.labs.blps.services;
+package ray1024.labs.blps.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
