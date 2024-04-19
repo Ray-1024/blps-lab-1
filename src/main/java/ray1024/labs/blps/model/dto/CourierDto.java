@@ -1,4 +1,4 @@
-package ray1024.labs.blps.model;
+package ray1024.labs.blps.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Courier {
+public class CourierDto {
 }

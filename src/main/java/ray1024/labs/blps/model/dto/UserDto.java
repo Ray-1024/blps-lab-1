@@ -1,4 +1,4 @@
-package ray1024.labs.blps.model;
+package ray1024.labs.blps.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import ray1024.labs.blps.model.entity.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+public class UserDto {
     private String login;
     private String password;
     private Role roleEntity;
