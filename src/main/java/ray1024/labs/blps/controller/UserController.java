@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/api/users/{userId}")
     public UserResponse getUser(@RequestBody UserRequest authRequest, @PathVariable Long userId) {
         if (!authRequest.getUser().getId().equals(userId)) throw new IllegalUserIdException();
-        return new UserResponse(userService.getById(authRequest.getUser()));
+        return new UserResponse(userService.getById(authRequest.getUser().getId()));
     }
 
     @PutMapping("/api/users/{userId}")
@@ -34,7 +34,7 @@ public class UserController {
     @DeleteMapping("/api/users/{userId}")
     public ResultResponse takeout(@RequestBody UserRequest authRequest, @PathVariable Long userId) {
         if (!authRequest.getUser().getId().equals(userId)) throw new IllegalUserIdException();
-        userService.takeout(authRequest.getUser());
+        userService.takeout(authRequest.getUser().getId());
         return new SuccessResponse();
     }
 }

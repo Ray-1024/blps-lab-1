@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 
+    @Column(nullable = false)
     private String address;
 }

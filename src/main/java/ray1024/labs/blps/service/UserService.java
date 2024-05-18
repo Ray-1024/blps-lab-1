@@ -2,7 +2,6 @@ package ray1024.labs.blps.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ray1024.labs.blps.exception.IllegalUserException;
 import ray1024.labs.blps.exception.UserAlreadySignedUpException;
 import ray1024.labs.blps.exception.UserDoesntExistsException;
 import ray1024.labs.blps.exception.UsernameAlreadyUsedException;
@@ -22,24 +21,21 @@ public class UserService {
         return userRepository.save(requestedUser);
     }
 
-    public User getById(User user) {
-        Optional<User> userO = userRepository.findById(user.getId());
-        if (!userO.isPresent()) throw new UserDoesntExistsException();
-        if (!userO.get().getUsername().equals(user.getUsername())) throw new IllegalUserException();
+    public User getById(long userId) {
+        Optional<User> userO = userRepository.findById(userId);
+        if (userO.isEmpty()) throw new UserDoesntExistsException();
         return userO.get();
     }
 
     public User modify(User user) {
-        User userOld = getById(user);
+        User userOld = getById(user.getId());
         if (!userOld.getUsername().equals(user.getUsername()) && userRepository.findByUsername(user.getUsername()).isPresent())
             throw new UsernameAlreadyUsedException();
         return userRepository.save(user);
     }
 
-    public void takeout(User user) {
-        User userOld = getById(user);
+    public void takeout(long userId) {
+        User userOld = getById(userId);
         userRepository.delete(userOld);
     }
-
-
 }

@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class Courier {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private User user;
 }
