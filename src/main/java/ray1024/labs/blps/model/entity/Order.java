@@ -19,31 +19,30 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "packer_id")
+    @JoinColumn(name = "packer_id", referencedColumnName = "id", nullable = false)
     private Packer packer;
 
     @ManyToOne
-    @JoinColumn(name = "courier_id")
+    @JoinColumn(name = "courier_id", referencedColumnName = "id", nullable = false)
     private Courier courier;
 
     @ManyToOne
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", referencedColumnName = "id", nullable = false)
     private Shop shop;
 
     @ManyToMany
     @JoinTable(name = "order_item",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
+            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false))
     private List<Item> items;
 }

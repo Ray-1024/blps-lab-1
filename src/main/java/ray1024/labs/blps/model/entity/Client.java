@@ -12,13 +12,12 @@ import lombok.NoArgsConstructor;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String address;
 }

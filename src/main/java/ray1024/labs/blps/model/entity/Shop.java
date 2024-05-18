@@ -14,8 +14,7 @@ import java.util.List;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shop_id")
-    private Long shop_id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -23,10 +22,9 @@ public class Shop {
     @Column(nullable = false, unique = true)
     private String address;
 
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "shop_item",
+            joinColumns = @JoinColumn(name = "shop_id", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false))
     private List<Item> items;
-
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
-    private List<Packer> packers;
-
 }

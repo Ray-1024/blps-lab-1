@@ -17,7 +17,7 @@ public class ShopController {
 
     @GetMapping("/api/shops")
     public ResultResponse getShops() {
-        return new SuccessResult<>(shopRepository.findAll().stream().map(Shop::getShop_id).toList());
+        return new SuccessResult<>(shopRepository.findAll().stream().map(Shop::getId).toList());
     }
 
     @PostMapping("/api/shops")
