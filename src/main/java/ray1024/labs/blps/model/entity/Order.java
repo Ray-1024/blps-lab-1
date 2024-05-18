@@ -19,23 +19,31 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long id;
-
-    @ManyToOne
-    private Client client;
-
-    @ManyToOne
-    private Packer packer;
-
-    @ManyToOne
-    private Courier courier;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "packer_id")
+    private Packer packer;
+
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    private Courier courier;
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 
     @ManyToMany
+    @JoinTable(name = "order_item",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items;
 }

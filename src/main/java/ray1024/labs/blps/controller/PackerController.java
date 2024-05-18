@@ -15,30 +15,30 @@ import java.util.Optional;
 public class PackerController {
     private final PackerRepository packerRepository;
 
-    @PostMapping("/api/packers")
-    public ResultResponse create(@RequestBody Packer packer) {
-        Optional<Packer> packerO = packerRepository.findByUserId(packer.getUser().getId());
+    @PostMapping("/api/users/{userId}/packer")
+    public ResultResponse create(@RequestBody Packer packer, @PathVariable Long userId) {
+        Optional<Packer> packerO = packerRepository.findByUserId(userId);
         if (packerO.isPresent()) return new FailureResult("Packer already exists");
         return new SuccessResult<>(packerRepository.save(packer));
     }
 
-    @GetMapping("/api/packers/{packerId}")
-    public ResultResponse get(@PathVariable Long packerId) {
-        Optional<Packer> userO = packerRepository.findById(packerId);
+    @GetMapping("/api/users/{userId}/packer")
+    public ResultResponse get(@PathVariable Long userId) {
+        Optional<Packer> userO = packerRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("User doesn't exist");
         return new SuccessResult<>(userO.get());
     }
 
-    @PutMapping("/api/packers/{packerId}")
-    public ResultResponse modify(@RequestBody Packer packer, @PathVariable Long packerId) {
-        Optional<Packer> userO = packerRepository.findById(packerId);
+    @PutMapping("/api/users/{userId}/packer")
+    public ResultResponse modify(@RequestBody Packer packer, @PathVariable Long userId) {
+        Optional<Packer> userO = packerRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("Packer doesn't exist");
         return new SuccessResult<>(packerRepository.save(packer));
     }
 
-    @DeleteMapping("/api/packers/{packerId}")
-    public ResultResponse delete(@PathVariable Long packerId) {
-        Optional<Packer> userO = packerRepository.findById(packerId);
+    @DeleteMapping("/api/users/{userId}/packer")
+    public ResultResponse delete(@PathVariable Long userId) {
+        Optional<Packer> userO = packerRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("Packer doesn't exist");
         return new SuccessResult<>(userO.get());
     }

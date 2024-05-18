@@ -14,7 +14,8 @@ import java.util.List;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "shop_id")
+    private Long shop_id;
 
     @Column(nullable = false)
     private String name;
@@ -22,6 +23,10 @@ public class Shop {
     @Column(nullable = false, unique = true)
     private String address;
 
-    @OneToMany
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     private List<Item> items;
+
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    private List<Packer> packers;
+
 }

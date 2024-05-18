@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 public class Courier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "courier_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 }

@@ -12,11 +12,14 @@ import lombok.NoArgsConstructor;
 public class Packer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "packer_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 }

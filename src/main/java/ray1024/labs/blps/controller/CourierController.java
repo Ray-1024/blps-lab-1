@@ -15,33 +15,31 @@ import java.util.Optional;
 public class CourierController {
     private final CourierRepository courierRepository;
 
-    @PostMapping("/api/couriers")
-    public ResultResponse create(@RequestBody Courier courier) {
-        Optional<Courier> courierO = courierRepository.findByUserId(courier.getUser().getId());
+    @PostMapping("/api/users/{userId}/courier")
+    public ResultResponse create(@RequestBody Courier courier, @PathVariable Long userId) {
+        Optional<Courier> courierO = courierRepository.findByUserId(userId);
         if (courierO.isPresent()) return new FailureResult("Courier already exists");
         return new SuccessResult<>(courierRepository.save(courier));
     }
 
-    @GetMapping("/api/couriers/{courierId}")
-    public ResultResponse get(@PathVariable Long courierId) {
-        Optional<Courier> userO = courierRepository.findById(courierId);
+    @GetMapping("/api/users/{userId}/courier")
+    public ResultResponse get(@PathVariable Long userId) {
+        Optional<Courier> userO = courierRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("User doesn't exist");
         return new SuccessResult<>(userO.get());
     }
 
-    @PutMapping("/api/couriers/{courierId}")
-    public ResultResponse modify(@RequestBody Courier courier, @PathVariable Long courierId) {
-        Optional<Courier> userO = courierRepository.findById(courierId);
+    @PutMapping("/api/users/{userId}/courier")
+    public ResultResponse modify(@RequestBody Courier courier, @PathVariable Long userId) {
+        Optional<Courier> userO = courierRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("Courier doesn't exist");
         return new SuccessResult<>(courierRepository.save(courier));
     }
 
-    @DeleteMapping("/api/couriers/{courierId}")
-    public ResultResponse delete(@PathVariable Long courierId) {
-        Optional<Courier> userO = courierRepository.findById(courierId);
+    @DeleteMapping("/api/users/{userId}/courier")
+    public ResultResponse delete(@PathVariable Long userId) {
+        Optional<Courier> userO = courierRepository.findByUserId(userId);
         if (userO.isEmpty()) return new FailureResult("Courier doesn't exist");
         return new SuccessResult<>(userO.get());
     }
-
-
 }
