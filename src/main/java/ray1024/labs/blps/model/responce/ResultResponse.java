@@ -8,5 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ResultResponse {
-    private String result;
+    enum Status {
+        SUCCESS, FAILURE
+    }
+
+    private Status status;
 }

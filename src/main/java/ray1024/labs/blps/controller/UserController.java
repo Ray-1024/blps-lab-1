@@ -2,39 +2,44 @@ package ray1024.labs.blps.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ray1024.labs.blps.exception.IllegalUserIdException;
-import ray1024.labs.blps.model.request.UserRequest;
+import ray1024.labs.blps.model.entity.User;
+import ray1024.labs.blps.model.responce.FailureResult;
 import ray1024.labs.blps.model.responce.ResultResponse;
-import ray1024.labs.blps.model.responce.SuccessResponse;
-import ray1024.labs.blps.model.responce.UserResponse;
-import ray1024.labs.blps.service.UserService;
+import ray1024.labs.blps.model.responce.SuccessResult;
+import ray1024.labs.blps.repository.UserRepository;
+
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
 public class UserController {
-    private UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping("/api/users")
-    public UserResponse signup(@RequestBody UserRequest authRequest) {
-        return new UserResponse(userService.signup(authRequest.getUser()));
+    public ResultResponse create(@RequestBody User user) {
+        Optional<User> userO = userRepository.findByUsername(user.getUsername());
+        if (userO.isPresent()) return new FailureResult("User already signed up");
+        return new SuccessResult<>(userRepository.save(user));
     }
 
     @GetMapping("/api/users/{userId}")
-    public UserResponse getUser(@RequestBody UserRequest authRequest, @PathVariable Long userId) {
-        if (!authRequest.getUser().getId().equals(userId)) throw new IllegalUserIdException();
-        return new UserResponse(userService.getById(authRequest.getUser().getId()));
+    public ResultResponse get(@PathVariable Long userId) {
+        Optional<User> userO = userRepository.findById(userId);
+        if (userO.isEmpty()) return new FailureResult("User doesn't exist");
+        return new SuccessResult<>(userO.get());
     }
 
     @PutMapping("/api/users/{userId}")
-    public UserResponse modifyUser(@RequestBody UserRequest authRequest, @PathVariable Long userId) {
-        if (!authRequest.getUser().getId().equals(userId)) throw new IllegalUserIdException();
-        return new UserResponse(userService.modify(authRequest.getUser()));
+    public ResultResponse modify(@RequestBody User user, @PathVariable Long userId) {
+        Optional<User> userO = userRepository.findById(userId);
+        if (userO.isEmpty()) return new FailureResult("User doesn't exist");
+        return new SuccessResult<>(userRepository.save(user));
     }
 
     @DeleteMapping("/api/users/{userId}")
-    public ResultResponse takeout(@RequestBody UserRequest authRequest, @PathVariable Long userId) {
-        if (!authRequest.getUser().getId().equals(userId)) throw new IllegalUserIdException();
-        userService.takeout(authRequest.getUser().getId());
-        return new SuccessResponse();
+    public ResultResponse delete(@PathVariable Long userId) {
+        Optional<User> userO = userRepository.findById(userId);
+        if (userO.isEmpty()) return new FailureResult("User doesn't exist");
+        return new SuccessResult<>(userO.get());
     }
 }
